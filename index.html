@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width">
+    <title> dtree example </title>
+    <style type="text/css">
+        body {
+            font: 10px sans-serif;
+        }
+
+        .linage {
+            fill: none;
+            stroke: #6CE427;
+        }
+
+        .marriage {
+            fill: none;
+            stroke: #00D1EC;
+        }
+
+        .man {
+            background-color: lightblue;
+            border-style: solid;
+            border-width: 1px;
+        }
+
+        .woman {
+            background-color: pink;
+            border-style: solid;
+            border-width: 1px;
+        }
+
+        .prophet {
+            background-color: #FFA909;
+            border-style: solid;
+            border-width: 3px;
+            text-align: center;
+        }
+
+        .emphasis {
+            font-style: italic;
+        }
+
+        p {
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="graph"></div>
+
+    <script src="https://d3js.org/d3.v4.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+
+    <script src="https://cdn.rawgit.com/ErikGartner/dTree/2.0.2/dist/dTree.min.js"></script>
+    <script type="application/javascript">
+        var data = [{
+            name: "1",                      // The name of the node
+            class: "man",                          // The CSS class of the node
+            textClass: "nodeText",                  // The CSS class of the text in the node
+            depthOffset: 1,                         // Generational height offset
+            marriages: [{                           // Marriages is a list of nodes
+                spouse: {                          // Each marriage has one spouse
+                    name: "w1",
+                    class: "woman"
+                },
+                children: [{                          // List of children nodes
+                    name: "C1",
+                    class: "man",
+                    marriages: [{
+                        spouse: {
+                            name: "spouseyspouse", 
+                            
+                        },
+                        children: [
+                                { name: "bob",
+                                depthOffset: 5 }
+                            ]
+                    }]
+                }]
+            }, {
+                spouse: {
+                    name: "w2",
+                    class: "woman"
+                },
+                children: [{
+                    name: "C2",
+                    class: "woman"
+                },
+                {                    
+                    name: "C3",
+                    class: "man",
+                    marriages: [{
+                        spouse: {
+                            name: "2genW1",
+                            class: "woman",
+                            children: [{
+                                name: "2genC1",
+                                class: "man"
+                            }]
+                        }
+                    }]
+                }
+                ]
+            }, {
+                spouse: {
+                    name: "w3",
+                    class: "woman"
+                },
+                children: [{
+                    name: "C4",
+                    class: "prophet"
+                }, {
+                    name: "C5"
+                }
+                ]
+            }],
+            children: [
+                {name:"bobby"}
+            ],
+            extra: {}                               // Custom data passed to renderers
+        }];
+
+        var options = {
+            target: '#graph',
+            debug: false,
+            width: 1800,
+            height: 1800,
+            callbacks: {
+                /*
+                  Callbacks should only be overwritten on a need to basis.
+                  See the section about callbacks below.
+                */
+            },
+            margin: {
+                top: 0,
+                right: 0,
+                bottom: 0,
+                left: 0
+            },
+            nodeWidth: 100,
+            styles: {
+                node: 'node',
+                linage: 'linage',
+                marriage: 'marriage',
+                text: 'nodeText'
+            }
+        };
+        dTree.init(data, options);
+        console.log(dTree);
+    </script>
+</body>
+
+</html>
